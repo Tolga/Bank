@@ -1,8 +1,7 @@
 ﻿namespace SDM.Interfaces
 {
-    public interface IDebit
+    public interface IPayment
     {
-        float Amount { get; set; }
         IOpHistory History { get; set; }
     }
 }

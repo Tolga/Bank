@@ -1,27 +1,26 @@
-﻿using System;
-
-namespace SDM
+﻿namespace SDM
 {
+    using System;
 	using Interfaces;
 
-	public class Deposit 
+	public class Deposit : IDeposit
 	{
-		int days_remaining{ get; set; }
-		double interest_rate{ get; set; }
-		IAccount account_to_pay{ get; set; }
+		public int DaysRemaining { get; set; }
+		public double InterestRate { get; set; }
+		public IAccount AccountToPay { get; set; }
 
-		public Deposit (int days_remaining,  double interest_rate, IAccount account )
+		public Deposit (int daysRemaining, double interestRate, IAccount account)
 		{
-			this.days_remaining = days_remaining;
-			this.interest_rate = interest_rate;
-			this.account_to_pay = account;
+			DaysRemaining = daysRemaining;
+			InterestRate = interestRate;
+			AccountToPay = account;
 		}
 
-		public Boolean payLinkedAccount(){
+		public Boolean PayLinkedAccount() {
 			return false;
 		}
 
-		public Boolean closeDeposit(){
+		public Boolean CloseDeposit() {
 			return false;
 		}
 	}

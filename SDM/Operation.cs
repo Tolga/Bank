@@ -1,30 +1,34 @@
-﻿using System;
-using System.Globalization;
-
-namespace SDM
+﻿namespace SDM
 {
+    using System.Collections.Generic;
 	using Interfaces;
 
 	public class Operation : IOperation
 	{
-		public Operation(IBank bank)
-		{	
-			Bank = bank;
-			DateOfExecution = DateOfExecution;
-			Description = Description;
-			Setup(bank);
-		}
+        public Operation()
+	    {
+            History = new List<IOpHistory>();
+	    }
 
-	    void Setup(IBank bnk){
-            Bank = bnk;
-			DateOfExecution = DateTime.Now;
-			Description = DateOfExecution.ToString(CultureInfo.InvariantCulture) + " : " + GetType();
-		}
+	    public void Pay(float amount, IAccount debitor, IAccount creditor)
+	    {
+            IPayment payment = new Payment(amount, debitor, creditor);
+            History.Add(payment.History);
+	    }
 
-		public IBank Bank { get; set; }
-		public DateTime DateOfExecution{ get; set;}
-		public String Description{ get; set; }
+        public void Loan(float amount, IAccount account)
+        {
+            ILoan loan = new Loan(amount, account);
+            History.Add(loan.History);
+	    }
 
+        public void Debit(float amount, IAccount account)
+        {
+            IDebit debit = new Debit(amount, account);
+            History.Add(debit.History);
+	    }
+
+        public List<IOpHistory> History { get; set; }
 	}
 }
 

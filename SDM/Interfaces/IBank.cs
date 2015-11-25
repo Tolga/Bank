@@ -7,10 +7,10 @@ namespace SDM.Interfaces
     {
         Random CreateRandom { get; set; }
 
+        float Balance { get; set; }
         float[] InterestRates { get; set; }
-        List<Operation> HistoryOfOperations { get; set; }
 
         List<ICustomer> Customers { get; set; }
-        List<IAccount> Accounts { get; set; }
+        IOperation Operations { get; set; }
     }
 }
