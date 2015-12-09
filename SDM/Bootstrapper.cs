@@ -30,6 +30,7 @@
                     Console.WriteLine();
                     Console.WriteLine("DEBIT LIMIT: " + account.AllowedDebit + account.Type);
                     Console.WriteLine();
+                    /*
                     Console.WriteLine("CURRENT DEBITS:");
                     if (account.Debits.Count > 0)
                     {
@@ -45,6 +46,7 @@
                         Console.WriteLine();
                         Console.WriteLine("NO DEBITS!");
                     }
+                     */
                     Console.WriteLine();
                     Console.WriteLine("HISTORY OF OPERATIONS:");
                     foreach (var history in account.History)

@@ -1,31 +1,42 @@
-﻿namespace SDM
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace SDM
 {
     using System;
-    using System.Linq;
     using Interfaces;
 
-    class Debit : IDebit
+    class Debit : IDebit, IOperation
     {
-        public float Amount { get; set; }
-        public IOpHistory History { get; set; }
-
         public Debit(float amount, IAccount account)
         {
             Amount = amount;
+            Account = account;
+            History = new List<IOpHistory>();
+        }
 
-            if (account.AllowedDebit >= account.Debits.Sum(d => d.Amount))
+        public void Execute(Command command, object[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Execute()
+        {
+            if (Account.AllowedDebit >= Account.Debits.Sum(d => d.Amount))
             {
-                account.AllowedDebit -= amount;
-                account.Balance += amount;
-                History = new OpHistory("New Debit " + amount + " " + account.Type + " on Account: " + account.Id, DateTime.Now);
-                account.History.Add(History);
-                account.Debits.Add(this);
+                Account.AllowedDebit -= Amount;
+                Account.Balance += Amount;
+                History.Add(new OpHistory("New Debit " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+                Account.Debits.Add(this);
             }
             else
             {
-                History = new OpHistory("Debit rejected " + amount + " " + account.Type + " on Account: " + account.Id, DateTime.Now);
-                account.History.Add(History);
+                History.Add(new OpHistory("Debit rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
             }
         }
+
+        public IAccount Account { get; set; }
+        public float Amount { get; set; }
+        public List<IOpHistory> History { get; set; }
     }
 }

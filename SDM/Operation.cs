@@ -10,25 +10,32 @@
             History = new List<IOpHistory>();
 	    }
 
-	    public void Pay(float amount, IAccount debitor, IAccount creditor)
+        public void Execute(Command command, object[] parameters)
 	    {
-            IPayment payment = new Payment(amount, debitor, creditor);
-            History.Add(payment.History);
+	        switch (command)
+	        {
+                case Command.Pay:
+                    new Payment((int)parameters[0], (IAccount)parameters[1], (IAccount)parameters[2]).Execute();
+                break;
+                case Command.Debit:
+                    new Debit((int)parameters[0], (IAccount)parameters[1]).Execute();
+                break;
+                case Command.Loan:
+                    new Loan((int)parameters[0], (IAccount)parameters[1]).Execute();
+                break;
+	        }
 	    }
+
+	    public List<IOpHistory> History { get; set; }
+
+        /*
 
         public void Loan(float amount, IAccount account)
         {
             ILoan loan = new Loan(amount, account);
             History.Add(loan.History);
 	    }
-
-        public void Debit(float amount, IAccount account)
-        {
-            IDebit debit = new Debit(amount, account);
-            History.Add(debit.History);
-	    }
-
-        public List<IOpHistory> History { get; set; }
+        */
 	}
 }
 

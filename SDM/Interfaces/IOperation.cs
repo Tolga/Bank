@@ -4,8 +4,7 @@
 
     public interface IOperation
     {
+        void Execute(Command command, object[] parameters);
         List<IOpHistory> History { get; set; }
-        void Debit(float amount, IAccount account);
-        void Pay(float amount, IAccount debitor, IAccount creditor);
     }
 }

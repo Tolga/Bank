@@ -79,6 +79,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Debit.cs" />
+    <Compile Include="Interfaces\Command.cs" />
     <Compile Include="Interfaces\ILoan.cs" />
     <Compile Include="Interfaces\IDebit.cs" />
     <Compile Include="Interfaces\IDeposit.cs" />
