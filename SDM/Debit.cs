@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SDM.Exceptions;
 
 namespace SDM
 {
@@ -22,17 +23,17 @@ namespace SDM
 
         public void Execute()
         {
-            if (Account.AllowedDebit >= Account.Debits.Sum(d => d.Amount))
+            try
             {
-                Account.AllowedDebit -= Amount;
-                Account.Balance += Amount;
-                History.Add(new OpHistory("New Debit " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
-                Account.Debits.Add(this);
+                Account.Balance -= Amount;
+                History.Add(new OpHistory("Debit operation finished successfully. " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+
             }
-            else
+            catch (ExceededDebitException e)
             {
-                History.Add(new OpHistory("Debit rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+                History.Add(new OpHistory("Debit operation rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
             }
+
         }
 
         public IAccount Account { get; set; }

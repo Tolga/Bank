@@ -79,6 +79,8 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Debit.cs" />
+    <Compile Include="DebitAccount.cs" />
+    <Compile Include="Exceptions\ExceededDebitException.cs" />
     <Compile Include="Interfaces\Command.cs" />
     <Compile Include="Interfaces\ILoan.cs" />
     <Compile Include="Interfaces\IDebit.cs" />
@@ -100,6 +102,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

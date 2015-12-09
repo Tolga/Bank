@@ -28,7 +28,7 @@
                     Console.WriteLine();
                     Console.WriteLine("DEBIT INFORMATION:");
                     Console.WriteLine();
-                    Console.WriteLine("DEBIT LIMIT: " + account.AllowedDebit + account.Type);
+                    Console.WriteLine("DEBIT LIMIT: " + (account is DebitAccount ? ((DebitAccount)account).AllowedDebit : 0) + account.Type);
                     Console.WriteLine();
                     /*
                     Console.WriteLine("CURRENT DEBITS:");

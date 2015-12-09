@@ -12,8 +12,5 @@ namespace SDM.Interfaces
         float InterestRate { get; set; }
         DateTime OpeningDate { get; set; }
         List<IOpHistory> History { get; set; }
-
-        float AllowedDebit { get; set; }
-        List<IDebit> Debits { get; set; }
     }
 }
