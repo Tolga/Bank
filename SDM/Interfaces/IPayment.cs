@@ -2,6 +2,9 @@
 {
     public interface IPayment
     {
-        IOpHistory History { get; set; }
+        float Amount { get; set; }
+        IAccount Creditor { get; set; }
+        IAccount Debitor { get; set; }
+        void Execute();
     }
 }
