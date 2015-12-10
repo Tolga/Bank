@@ -97,6 +97,9 @@
     <Compile Include="Operation.cs" />
     <Compile Include="Deposit.cs" />
     <Compile Include="Loan.cs" />
+    <Compile Include="InterestCalculation.cs" />
+    <Compile Include="InterestCalculationDeposit.cs" />
+    <Compile Include="InterestCalculationLoan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

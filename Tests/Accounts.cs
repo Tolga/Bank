@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SDM;
 using SDM.Interfaces;
 
-//Git push test: Adding just a comment
-
 namespace Tests
 {
     /// <summary>
