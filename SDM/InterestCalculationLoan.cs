@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SDM
+﻿namespace SDM
 {
 	class InterestCalculationLoan : InterestCalculation
 	{
-		public override float calculateInterest(Account ac)
+		public override float CalculateInterest(Account ac)
 		{
 			return -ac.Balance*0.05f;
 		}

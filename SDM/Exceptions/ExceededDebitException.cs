@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDM.Exceptions
 {
@@ -12,8 +8,7 @@ namespace SDM.Exceptions
         {
         }
 
-        public ExceededDebitException(string message)
-            : base("Balance exceeded allowed debit")
+        public ExceededDebitException(string message) : base("Balance exceeded allowed debit")
         {
         }
 

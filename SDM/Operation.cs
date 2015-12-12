@@ -3,6 +3,9 @@
     using System.Collections.Generic;
 	using Interfaces;
 
+    /// <summary>
+    /// Invoker
+    /// </summary>
 	public class Operation : IOperation
     {
         public List<IOpHistory> History { get; set; }
@@ -28,8 +31,10 @@
                     break;
 	        }
 
+            if (result != null)
+                History.AddRange(result.History);
             return result;
-	    }
+        }
 
         /*
 

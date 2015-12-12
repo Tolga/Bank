@@ -5,5 +5,6 @@
     public interface IOperation
     {
         List<IOpHistory> History { get; set; }
+        ICommand Commit(Commands command, object[] parameters);
     }
 }

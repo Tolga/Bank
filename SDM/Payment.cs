@@ -4,8 +4,14 @@
     using System.Collections.Generic;
     using Interfaces;
 
-    class Payment : ICommand, IOperation
+    class Payment : ICommand
     {
+        public Commands Command { get; set; }
+        public float Amount { get; set; }
+        public IAccount Creditor { get; set; }
+        public IAccount Debitor { get; set; }
+        public List<IOpHistory> History { get; set; }
+
         public Payment(float amount, IAccount debitor, IAccount creditor)
         {
             Debitor = debitor;
@@ -14,7 +20,7 @@
             History = new List<IOpHistory>();
         }
 
-        public void Execute(Commands command)
+        public void Execute()
         {
             if (Debitor.Balance - Amount >= 0)
             {
@@ -29,11 +35,5 @@
                 History.Add(new OpHistory("Payment rejected! Insufficient funds!", DateTime.Now));
             }
         }
-
-        public Commands Command { get; set; }
-        public float Amount { get; set; }
-        public IAccount Creditor { get; set; }
-        public IAccount Debitor { get; set; }
-        public List<IOpHistory> History { get; set; }
     }
 }

@@ -10,7 +10,7 @@
             Bank bank = new Bank();
             foreach (var customer in bank.Customers)
             {
-                var account = customer.Accounts.Single(aid => aid.CustomerId == customer.Id);
+                var account = customer.Accounts.SingleOrDefault(aid => aid.CustomerId == customer.Id);
 
                 Console.WriteLine();
                 Console.WriteLine("CUSTOMER:");
@@ -28,9 +28,10 @@
                     Console.WriteLine();
                     Console.WriteLine("DEBIT INFORMATION:");
                     Console.WriteLine();
-                    Console.WriteLine("DEBIT LIMIT: " + (account is DebitAccount ? ((DebitAccount)account).AllowedDebit : 0) + account.Type);
+                    Console.WriteLine("DEBIT LIMIT: " + ((account as DebitAccount)?.AllowedDebit ?? 0) + account.Type);
                     Console.WriteLine();
                     /*
+                    ToDo: Update listing customer's current debits to new logic
                     Console.WriteLine("CURRENT DEBITS:");
                     if (account.Debits.Count > 0)
                     {

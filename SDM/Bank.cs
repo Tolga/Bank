@@ -27,20 +27,19 @@ namespace SDM
             foreach (var customer in Customers)
                 customer.Accounts.Add(new Account(NewId(), customer.Id));
 
-            Operations.Execute(Commands.Pay, new object[] {20, Customers[0].Accounts[0], Customers[1].Accounts[0]});
-            Operations.Execute(Commands.Debit, new object[] {195, Customers[1].Accounts[0]});
+            Operations.Commit(Commands.Pay, new object[] {20, Customers[0].Accounts[0], Customers[1].Accounts[0]}).Execute();
+            Operations.Commit(Commands.Debit, new object[] {195, Customers[1].Accounts[0]}).Execute();
         }
 
         /*
-         * Create a new id, check if is there any other customer with same id. If there is then try another one.
+         * Creates a new id, check if is there any other customer with same id. If there is then try another one.
+         * ToDo: Provide id creation for Accounts as well to check both to assure uniqness of id!
          */
         private int NewId()
         {
             var id = CreateRandom.Next(99999999, 999999999);
-
             if (Customers != null)
-                return (Customers.FirstOrDefault(cid => cid.Id == id) != null) ? NewId() : id;
-
+                return (Customers.SingleOrDefault(cid => cid.Id == id) != null) ? NewId() : id;
             return id;
         }
 

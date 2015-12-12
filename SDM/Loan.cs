@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Interfaces;
 
-	public class Loan : ICommand, IOperation
+	public class Loan : ICommand
     {
         public Commands Command { get; set; }
         public float Amount { get; set; }
@@ -20,7 +20,7 @@
             History = new List<IOpHistory>();
         }
 
-        public void Execute(Commands command)
+        public void Execute()
         {
             Account.Balance += Amount;
             MontlyCost += Amount;
