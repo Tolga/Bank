@@ -10,12 +10,12 @@ namespace SDM
     {
         public Bank()
         {
+            History = new List<IOpHistory>();
             CreateData();
         }
 
         private void CreateData()
         {
-            Operations = new Operation();
             CreateRandom = new Random();
 
             // Create Customers
@@ -29,11 +29,16 @@ namespace SDM
             foreach (var customer in Customers)
                 customer.Accounts.Add(new Account(NewId(), customer.Id));
 
-            // Transfer 40 Zl
-            Operations.Commit(Commands.Pay, new object[] {40, Customers[0].Accounts[0], Customers[1].Accounts[0]}).Execute();
+            // Transfer 40 Zl then Cancel it
+            ICommand pay = new Operation(Commands.Pay, new object[] { 40, Customers[0].Accounts[0], Customers[1].Accounts[0] }).Commit();
+            pay.Execute();
+            pay.Cancel();
+            History.AddRange(pay.History);
 
             // Create a new debit of 150 Zl
-            Operations.Commit(Commands.Debit, new object[] {150, Customers[1].Accounts[0]}).Execute();
+            ICommand debit = new Operation(Commands.Debit, new object[] {150, Customers[1].Accounts[0]}).Commit();
+            debit.Execute();
+            History.AddRange(debit.History);
         }
 
         /*
@@ -52,6 +57,6 @@ namespace SDM
         public float Balance { get; set; }
         public float[] InterestRates { get; set; }
         public List<ICustomer> Customers { get; set; }
-        public IOperation Operations { get; set; }
+        public List<IOpHistory> History { get; set; }
     }
 }

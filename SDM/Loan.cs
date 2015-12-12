@@ -26,7 +26,14 @@
             MontlyCost += Amount;
             Amount += Amount;
             Account.History.Add(new OpHistory("New Loan " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
-	    }
-	}
+        }
+        public void Cancel()
+        {
+            Account.Balance -= Amount;
+            MontlyCost -= Amount;
+            Amount -= Amount;
+            Account.History.Add(new OpHistory("Loan Cancelled " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+        }
+    }
 }
 

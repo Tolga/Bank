@@ -8,42 +8,34 @@
     /// </summary>
 	public class Operation : IOperation
     {
+        private object[] Parameters { get; }
+        private Commands Command { get; }
         public List<IOpHistory> History { get; set; }
 
-        public Operation()
+        public Operation(Commands command, object[] parameters)
 	    {
+            Command = command;
+            Parameters = parameters;
             History = new List<IOpHistory>();
 	    }
 
-        public ICommand Commit(Commands command, object[] parameters)
+        public ICommand Commit()
 	    {
             ICommand result = null;
-            switch (command)
+            switch (Command)
 	        {
                 case Commands.Pay:
-                    result = new Payment((int)parameters[0], (IAccount)parameters[1], (IAccount)parameters[2]);
+                    result = new Payment((int)Parameters[0], (IAccount)Parameters[1], (IAccount)Parameters[2]);
                     break;
                 case Commands.Debit:
-                    result = new Debit((int)parameters[0], (IAccount)parameters[1]);
+                    result = new Debit((int)Parameters[0], (IAccount)Parameters[1]);
                     break;
                 case Commands.Loan:
-                    result = new Loan((int)parameters[0], (IAccount)parameters[1]);
+                    result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);
                     break;
 	        }
-
-            if (result != null)
-                History.AddRange(result.History);
             return result;
-        }
-
-        /*
-
-        public void Loan(float amount, IAccount account)
-        {
-            ILoan loan = new Loan(amount, account);
-            History.Add(loan.History);
 	    }
-        */
-	}
+    }
 }
 

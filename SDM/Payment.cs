@@ -35,5 +35,14 @@
                 History.Add(new OpHistory("Payment rejected! Insufficient funds!", DateTime.Now));
             }
         }
+
+        public void Cancel()
+        {
+            Debitor.Balance += Amount;
+            Creditor.Balance -= Amount;
+            History.Add(new OpHistory(Debitor.CustomerId + " Cancelled Payment " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
+            Debitor.History.Add(new OpHistory("Payment Cancelled " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
+            Creditor.History.Add(new OpHistory("Payment Returned" + Amount + " " + Creditor.Type + " from: " + Debitor.CustomerId, DateTime.Now));
+        }
     }
 }

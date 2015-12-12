@@ -66,7 +66,7 @@
             Console.WriteLine("BANK'S HISTORY OF OPERATIONS:");
             Console.WriteLine();
 
-            foreach (var history in bank.Operations.History)
+            foreach (var history in bank.History)
             {
                 Console.WriteLine("DESCRIPTION: " + history.Description);
                 Console.WriteLine("DATE OF EXECUTION: " + history.DateOfExecution);

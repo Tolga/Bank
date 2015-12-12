@@ -10,6 +10,7 @@
         public Commands Command { get; set; }
         public IAccount Account { get; set; }
         public float Amount { get; set; }
+
         public List<IOpHistory> History { get; set; }
 
         public Debit(float amount, IAccount account)
@@ -30,6 +31,11 @@
             {
                 History.Add(new OpHistory("Debit operation rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
             }
+        }
+        public void Cancel()
+        {
+            Account.Balance += Amount;
+            History.Add(new OpHistory("Debit operation cancelled successfully. " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
         }
     }
 }

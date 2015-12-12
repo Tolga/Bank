@@ -11,6 +11,6 @@ namespace SDM.Interfaces
         float[] InterestRates { get; set; }
 
         List<ICustomer> Customers { get; set; }
-        IOperation Operations { get; set; }
+        List<IOpHistory> History { get; set; }
     }
 }
