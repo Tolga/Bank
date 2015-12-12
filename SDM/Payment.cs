@@ -26,9 +26,9 @@
             {
                 Debitor.Balance -= Amount;
                 Creditor.Balance = Creditor.Balance + Amount;
+                History.Add(new OpHistory(Debitor.CustomerId + " payed " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
                 Debitor.History.Add(new OpHistory("Payed " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
                 Creditor.History.Add(new OpHistory("Recieved " + Amount + " " + Creditor.Type + " from: " + Debitor.CustomerId, DateTime.Now));
-                History.Add(new OpHistory(Debitor.CustomerId + " payed " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
             }
             else
             {
