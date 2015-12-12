@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace SDM
+﻿namespace SDM
 {
     using System;
-	using Interfaces;
+    using System.Collections.Generic;
+    using Interfaces;
 
-	public class Loan : ILoan, IOperation
-	{
+	public class Loan : ICommand, IOperation
+    {
+        public Commands Command { get; set; }
         public float Amount { get; set; }
         public float MontlyCost { get; set; }
         public float InterestRate { get; set; }
@@ -20,13 +20,8 @@ namespace SDM
             History = new List<IOpHistory>();
         }
 
-        public void Execute(Command command, object[] parameters)
+        public void Execute(Commands command)
         {
-            throw new NotImplementedException();
-        }
-
-	    public void Execute()
-	    {
             Account.Balance += Amount;
             MontlyCost += Amount;
             Amount += Amount;

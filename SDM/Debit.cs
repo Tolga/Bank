@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SDM.Exceptions;
-
-namespace SDM
+﻿namespace SDM
 {
     using System;
+    using System.Collections.Generic;
     using Interfaces;
+    using Exceptions;
 
-    class Debit : IDebit, IOperation
+    class Debit : ICommand, IOperation
     {
         public Debit(float amount, IAccount account)
         {
@@ -16,12 +14,7 @@ namespace SDM
             History = new List<IOpHistory>();
         }
 
-        public void Execute(Command command, object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute()
+        public void Execute(Commands command)
         {
             try
             {
@@ -36,6 +29,7 @@ namespace SDM
 
         }
 
+        public Commands Command { get; set; }
         public IAccount Account { get; set; }
         public float Amount { get; set; }
         public List<IOpHistory> History { get; set; }

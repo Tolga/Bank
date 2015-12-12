@@ -1,6 +1,6 @@
-﻿namespace SDM.Interfaces
+﻿namespace SDM
 {
-    public enum Command
+    public enum Commands
     {
         Pay,
         Debit,

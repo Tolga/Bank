@@ -27,8 +27,8 @@ namespace SDM
             foreach (var customer in Customers)
                 customer.Accounts.Add(new Account(NewId(), customer.Id));
 
-            Operations.Execute(Command.Pay, new object[] {20, Customers[0].Accounts[0], Customers[1].Accounts[0]});
-            Operations.Execute(Command.Debit, new object[] {195, Customers[1].Accounts[0]});
+            Operations.Execute(Commands.Pay, new object[] {20, Customers[0].Accounts[0], Customers[1].Accounts[0]});
+            Operations.Execute(Commands.Debit, new object[] {195, Customers[1].Accounts[0]});
         }
 
         /*

@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace SDM
+﻿namespace SDM
 {
     using System;
+    using System.Collections.Generic;
     using Interfaces;
 
-    class Payment : IPayment, IOperation
+    class Payment : ICommand, IOperation
     {
         public Payment(float amount, IAccount debitor, IAccount creditor)
         {
@@ -15,12 +14,7 @@ namespace SDM
             History = new List<IOpHistory>();
         }
 
-        public void Execute(Command command, object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute()
+        public void Execute(Commands command)
         {
             if (Debitor.Balance - Amount >= 0)
             {
@@ -36,7 +30,7 @@ namespace SDM
             }
         }
 
-
+        public Commands Command { get; set; }
         public float Amount { get; set; }
         public IAccount Creditor { get; set; }
         public IAccount Debitor { get; set; }

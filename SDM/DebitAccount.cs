@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using SDM.Exceptions;
-using SDM.Interfaces;
-
-namespace SDM
+﻿namespace SDM
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using Exceptions;
+    using Interfaces;
+
     internal class DebitAccount : IAccount
     {
         private readonly IAccount _account;
@@ -75,9 +75,9 @@ namespace SDM
 
         public DebitAccount(IAccount account, float allowedDebit = 250.00F, float debit = 0F)
         {
-            this._account = account;
-            this.AllowedDebit = allowedDebit;
-            this.Debit = debit;
+            _account = account;
+            AllowedDebit = allowedDebit;
+            Debit = debit;
 
             account.Balance = account.Balance - 100;
             account.Balance = account.Balance + 100;
