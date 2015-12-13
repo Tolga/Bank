@@ -62,7 +62,7 @@
                             return (Customers.SingleOrDefault(cid => cid.Id == id) != null) ? NewId("Customer") : id;
                         break;
                     case "Account":
-                        if (Customers.SingleOrDefault(a => a.Accounts.Any()) != null)
+                        if (Customers.FirstOrDefault(a => a.Accounts.Any(aid => aid.Id == id)) != null)
                             return (Customers.First(a => a.Accounts.Any(aid => aid.Id == id)) != null) ? NewId("Account") : id;
                         break;
                 }
