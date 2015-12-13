@@ -20,14 +20,14 @@
             History = new List<IOpHistory>();
         }
 
-        public void Execute()
+        public void Do()
         {
             Account.Balance += Amount;
             MontlyCost += Amount;
             Amount += Amount;
             Account.History.Add(new OpHistory("New Loan " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
         }
-        public void Cancel()
+        public void Undo()
         {
             Account.Balance -= Amount;
             MontlyCost -= Amount;

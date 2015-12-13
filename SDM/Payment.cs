@@ -20,7 +20,7 @@
             History = new List<IOpHistory>();
         }
 
-        public void Execute()
+        public void Do()
         {
             if (Debitor.Balance - Amount >= 0)
             {
@@ -36,13 +36,13 @@
             }
         }
 
-        public void Cancel()
+        public void Undo()
         {
             Debitor.Balance += Amount;
             Creditor.Balance -= Amount;
             History.Add(new OpHistory(Debitor.CustomerId + " Cancelled Payment " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
             Debitor.History.Add(new OpHistory("Payment Cancelled " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, DateTime.Now));
-            Creditor.History.Add(new OpHistory("Payment Returned" + Amount + " " + Creditor.Type + " from: " + Debitor.CustomerId, DateTime.Now));
+            Creditor.History.Add(new OpHistory("Payment Returned " + Amount + " " + Creditor.Type + " to: " + Debitor.CustomerId, DateTime.Now));
         }
     }
 }

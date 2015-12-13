@@ -20,7 +20,7 @@
             History = new List<IOpHistory>();
         }
 
-        public void Execute()
+        public void Do()
         {
             try
             {
@@ -32,7 +32,7 @@
                 History.Add(new OpHistory("Debit operation rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
             }
         }
-        public void Cancel()
+        public void Undo()
         {
             Account.Balance += Amount;
             History.Add(new OpHistory("Debit operation cancelled successfully. " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));

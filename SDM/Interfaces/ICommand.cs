@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     public interface ICommand
     {
-        void Execute();
-        void Cancel();
+        void Do();
+        void Undo();
         List<IOpHistory> History { get; set; }
     }
 }
