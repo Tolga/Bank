@@ -4,6 +4,13 @@
     {
         Pay,
         Debit,
-        Loan
+        Deposit,
+        Withdrawal,
+        InterestCalculation,
+        ChangeInterestRate,
+        CloseDeposit,
+        OpenCredit,
+        CreditPayment,
+        Reporting
     }
 }

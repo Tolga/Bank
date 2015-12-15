@@ -44,6 +44,12 @@
             ICommand debit = new Operation(Commands.Debit, new object[] {150, Customers[1].Accounts[0]}).Commit();
             debit.Do();
             History.AddRange(debit.History);
+
+
+            // Create a new deposit of 150 Zl
+            ICommand deposit = new Operation(Commands.Deposit, new object[] { 150, Customers[1].Accounts[0] }).Commit();
+            Deposit.Do();
+            History.AddRange(deposit.History);
         }
 
         /// <summary>

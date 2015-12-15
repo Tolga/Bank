@@ -31,9 +31,20 @@
                     result = new Debit((int)Parameters[0], (IAccount)Parameters[1]);
                     break;
                 case Commands.Loan:
-                    result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);
+                    result = new Credit((int)Parameters[0], (IAccount)Parameters[1]);
                     break;
-	        }
+                //case Commands.Deposit:result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);break;
+                //case Commands.Withdrawal:result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);break;
+                case Commands.InterestCalculation:
+                    result = new OperationInterestCalculation((int)Parameters[0], (IAccount)Parameters[1]);
+                    break;
+                //case Commands.ChangeInterestRate:result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);break;
+                case Commands.CloseDeposit:result = new Credit((int)Parameters[0], (IAccount)Parameters[1]);break;
+                case Commands.OpenCredit:result = new Credit((int)Parameters[0], (IAccount)Parameters[1]);break;
+                case Commands.CreditPayment:result = new Credit((int)Parameters[0], (IAccount)Parameters[1]);break;
+                case Commands.Reporting = new Credit((int)Parameters[0], (IAccount)Parameters[1]); break;
+
+            }
             return result;
 	    }
     }

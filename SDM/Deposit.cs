@@ -22,8 +22,9 @@
 
         public float calculateInterests(IOperation op)
         {
-            //History.Add (op);
-            //Bank.Add( Op ) ;
+            IOperation op = new 
+            History.Add (op);
+            Bank.Add( Op ) ;
 
             return 0;
         }
@@ -41,14 +42,23 @@
 			return false;
 		}
 
-		public Boolean CloseDeposit() {
-			return false;
-		}
+        public Boolean CloseDeposit()
+        {
 
-        public float calculateInterests()
+            IOperation op = new OperationInterestCalculationDeposit(this);
+
+
+            //History.Add(op);
+            //Bank.Add(Op);
+
+            return 0;
+
+            return false;
+        }
+
+        internal static void Do()
         {
             throw new NotImplementedException();
         }
-
     }
 }

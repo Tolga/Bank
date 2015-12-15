@@ -2,7 +2,7 @@
 
 namespace SDM.Interfaces
 {
-    public interface IDeposit : IAccount
+    public interface IDeposit : IAccount,ICommand
     {
         int DaysRemaining { get; set; }
         IAccount AccountToPay { get; set; }

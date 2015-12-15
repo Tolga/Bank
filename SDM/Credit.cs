@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Interfaces;
 
-	public class Loan : ICommand
+	public class Credit : ICommand
     {
         public Commands Command { get; set; }
         public float Amount { get; set; }
@@ -13,7 +13,7 @@
 	    public IAccount Account { get; set; }
 	    public List<IOpHistory> History { get; set; }
 
-        public Loan(float amount, IAccount account)
+        public Credit(float amount, IAccount account)
         {
             Account = account;
             Amount = amount;

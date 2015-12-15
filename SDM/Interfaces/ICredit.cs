@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SDM.Interfaces
 {
-    public interface ILoan : IAccount
+    public interface ICredit : IAccount
     {
         int DaysRemaining { get; set; }
         IAccount AccountToPay { get; set; }

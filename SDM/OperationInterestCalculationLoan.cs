@@ -1,6 +1,6 @@
 ﻿namespace SDM
 {
-	class InterestCalculationLoan : InterestCalculation
+	class OperationInterestCalculationLoan : OperationInterestCalculation
 	{
 		public override float CalculateInterest(Account ac)
 		{
