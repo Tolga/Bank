@@ -1,15 +1,36 @@
 ﻿namespace SDM
 {
     using System;
-	using Interfaces;
+    using System.Collections.Generic;
+    using Interfaces;
 
-	public class Deposit : IDeposit
+    public class Deposit : IDeposit
 	{
 		public int DaysRemaining { get; set; }
-		public double InterestRate { get; set; }
 		public IAccount AccountToPay { get; set; }
 
-		public Deposit (int daysRemaining, double interestRate, IAccount account)
+        #region deposit_attributes
+
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public string Type { get; set; }
+        public float Balance { get; set; }
+        public float InterestRate { get; set; }
+        public DateTime OpeningDate { get; set; }
+        public List<IOpHistory> History { get; set; }
+        public IBank Bank { get; set; }
+
+        public float calculateInterests(IOperation op)
+        {
+            //History.Add (op);
+            //Bank.Add( Op ) ;
+
+            return 0;
+        }
+
+        #endregion
+
+        public Deposit (int daysRemaining, float interestRate, IAccount account)
 		{
 			DaysRemaining = daysRemaining;
 			InterestRate = interestRate;
@@ -23,5 +44,11 @@
 		public Boolean CloseDeposit() {
 			return false;
 		}
-	}
+
+        public float calculateInterests()
+        {
+            throw new NotImplementedException();
+        }
+
+    }
 }

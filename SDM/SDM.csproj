@@ -87,6 +87,7 @@
     <Compile Include="Interfaces\IBank.cs" />
     <Compile Include="Interfaces\ICustomer.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
+    <Compile Include="Interfaces\ILoan.cs" />
     <Compile Include="Interfaces\IOpHistory.cs" />
     <Compile Include="Interfaces\IOperation.cs" />
     <Compile Include="OpHistory.cs" />

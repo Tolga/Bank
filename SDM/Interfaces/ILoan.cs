@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SDM.Interfaces
 {
-    public interface IDeposit : IAccount
+    public interface ILoan : IAccount
     {
         int DaysRemaining { get; set; }
         IAccount AccountToPay { get; set; }
         Boolean PayLinkedAccount();
-        Boolean CloseDeposit();
+
+        //closeLoan() ?
         float calculateInterests();
     }
 }

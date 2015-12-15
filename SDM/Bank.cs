@@ -32,7 +32,7 @@
 
             // Create Accounts for Customers
             foreach (var customer in Customers)
-                customer.Accounts.Add(new Account(NewId("Account"), customer.Id));
+                customer.Accounts.Add(new Account(NewId("Account"), customer.Id, this));
 
             // Transfer 40 Zl then Undo it
             ICommand pay = new Operation(Commands.Pay, new object[] {40, Customers[0].Accounts[0], Customers[1].Accounts[0]}).Commit();

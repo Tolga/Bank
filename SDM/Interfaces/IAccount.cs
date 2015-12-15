@@ -12,5 +12,9 @@ namespace SDM.Interfaces
         float InterestRate { get; set; }
         DateTime OpeningDate { get; set; }
         List<IOpHistory> History { get; set; }
+
+        IBank Bank { get; set; }
+
+        float calculateInterests(IOperation op);
     }
 }

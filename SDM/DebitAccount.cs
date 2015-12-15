@@ -13,6 +13,11 @@
         public float AllowedDebit { get; set; }
 
         public float Debit { get; set; }
+        public IBank Bank { get; set; }
+        public float calculateInterests(IOperation op)
+        {
+            return 0;
+        }
 
         public float Balance
         {
@@ -73,6 +78,8 @@
         }
         #endregion
 
+       
+
         public DebitAccount(IAccount account, float allowedDebit = 250.00F, float debit = 0F)
         {
             _account = account;
@@ -83,5 +90,9 @@
             account.Balance = account.Balance + 100;
         }
 
-    }
+       
+
+
+
+}
 }
