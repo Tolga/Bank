@@ -35,13 +35,14 @@
                 customer.Accounts.Add(new Account(NewId("Account"), customer.Id));
 
             // Transfer 40 Zl then Undo it
-            ICommand pay = new Operation(Commands.Pay, new object[] {40, Customers[0].Accounts[0], Customers[1].Accounts[0]}).Commit();
+            IOperation pay = new Operation(Commands.Pay, new object[] {40, Customers[0].Accounts[0], Customers[1].Accounts[0]});
             pay.Do();
             pay.Undo();
+            pay.Do();
             History.AddRange(pay.History);
 
             // Create a new debit of 150 Zl
-            ICommand debit = new Operation(Commands.Debit, new object[] {150, Customers[1].Accounts[0]}).Commit();
+            IOperation debit = new Operation(Commands.Debit, new object[] {150, Customers[1].Accounts[0]});
             debit.Do();
             History.AddRange(debit.History);
         }

@@ -5,7 +5,7 @@
     using Interfaces;
     using Exceptions;
 
-    class Debit : ICommand
+    class Debit : IOperation
     {
         public Commands Command { get; set; }
         public IAccount Account { get; set; }

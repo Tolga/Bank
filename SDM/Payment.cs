@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Interfaces;
 
-    class Payment : ICommand
+    class Payment : IOperation
     {
         public Commands Command { get; set; }
         public float Amount { get; set; }
