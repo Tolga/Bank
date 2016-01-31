@@ -6,6 +6,13 @@
     {
         void Do();
         void Undo();
-        List<IOpHistory> History { get; set; }
+        List<IOperationHistory> History { get; set; }
+    }
+    public enum Commands
+    {
+        Transfer,
+        Debit,
+        Deposit,
+        Loan
     }
 }

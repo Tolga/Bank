@@ -4,8 +4,9 @@
 
     public interface ICustomer
     {
-        int Id { get; set; }
+        int CustomerId { get; set; }
         string Name { get; set; }
         List<IAccount> Accounts { get; set; }
+        int NewAccountId();
     }
 }

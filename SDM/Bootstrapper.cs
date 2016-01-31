@@ -1,7 +1,6 @@
 ﻿namespace SDM
 {
     using System;
-    using System.Linq;
 
     class Bootstrapper
     {
@@ -10,56 +9,42 @@
             Bank bank = new Bank();
             foreach (var customer in bank.Customers)
             {
-                var account = customer.Accounts.SingleOrDefault(aid => aid.CustomerId == customer.Id);
-
-                Console.WriteLine();
-                Console.WriteLine("CUSTOMER:");
-                Console.WriteLine();
-                Console.WriteLine("ID: {0} - NAME: {1}", customer.Id, customer.Name);
-
-                if (account != null)
+                foreach (var account in customer.Accounts)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("ACCOUNT:");
+                    Console.WriteLine("CUSTOMER:");
                     Console.WriteLine();
-                    Console.WriteLine("ID: {0} - TYPE: {1}", account.Id, account.Type);
-                    Console.WriteLine("BALANCE: {0} - INTEREST RATE: {1}", account.Balance, account.InterestRate);
-                    Console.WriteLine("OPENING DATE: " + account.OpeningDate);
-                    Console.WriteLine();
-                    Console.WriteLine("DEBIT INFORMATION:");
-                    Console.WriteLine();
-                    Console.WriteLine("DEBIT LIMIT: " + ((account as DebitAccount)?.AllowedDebit ?? 0) + account.Type);
-                    Console.WriteLine();
-                    /*
-                    ToDo: Update listing customer's current debits to new logic
-                    Console.WriteLine("CURRENT DEBITS:");
-                    if (account.Debits.Count > 0)
+                    Console.WriteLine("ID: {0} - NAME: {1}", customer.CustomerId, customer.Name);
+
+                    if (account != null)
                     {
-                        foreach (var debit in account.Debits)
+                        Console.WriteLine();
+                        Console.WriteLine("ACCOUNT:");
+                        Console.WriteLine();
+                        Console.WriteLine("ID: {0}", account.AccountId);
+                        Console.WriteLine("BALANCE: {0} - INTEREST RATE: {1}", account.Balance, account.State.Check());
+                        Console.WriteLine("OPENING DATE: " + account.OpenDate);
+                        Console.WriteLine();
+                        Console.WriteLine("DEBIT INFORMATION:");
+                        Console.WriteLine();
+                        Console.WriteLine("DEBIT LEFT: " + account.AllowedDebit);
+                        Console.WriteLine();
+                        Console.WriteLine("DEBIT AMOUNT:" + account.Debits);
+
+                        Console.WriteLine();
+                        Console.WriteLine("HISTORY OF OPERATIONS:");
+
+                        foreach (var history in account.History)
                         {
                             Console.WriteLine();
-                            Console.WriteLine("AMOUNT: " + debit.Amount + account.Type);
-                            Console.WriteLine("DATE TIME: " + debit.History.DateOfExecution);
+                            Console.WriteLine("DESCRIPTION: " + history.Details);
+                            Console.WriteLine("DATE TIME: " + history.DateOfExecution);
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("NO DEBITS!");
-                    }
-                     */
-                    Console.WriteLine();
-                    Console.WriteLine("HISTORY OF OPERATIONS:");
-                    foreach (var history in account.History)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("DESCRIPTION: " + history.Description);
-                        Console.WriteLine("DATE TIME: " + history.DateOfExecution);
-                    }
-                }
 
-                Console.WriteLine();
-                Console.WriteLine("------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("------------------------------------------------------------");
+                }
             }
 
             Console.WriteLine();
@@ -68,7 +53,7 @@
 
             foreach (var history in bank.History)
             {
-                Console.WriteLine("DESCRIPTION: " + history.Description);
+                Console.WriteLine("DESCRIPTION: " + history.Details);
                 Console.WriteLine("DATE OF EXECUTION: " + history.DateOfExecution);
                 Console.WriteLine();
             }

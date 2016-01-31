@@ -11,11 +11,11 @@
         public float Balance { get; set; }
         public float[] InterestRates { get; set; }
         public List<ICustomer> Customers { get; set; }
-        public List<IOpHistory> History { get; set; }
+        public List<IOperationHistory> History { get; set; }
 
         public Bank()
         {
-            History = new List<IOpHistory>();
+            History = new List<IOperationHistory>();
             CreateData();
         }
 
@@ -26,47 +26,46 @@
             // Create Customers
             Customers = new List<ICustomer>
             {
-                new Customer(NewId("Customer"), "Erik Klasson"),
-                new Customer(NewId("Customer"), "Mark Encor")
+                new Customer(NewCustomerId(), "Erik Klasson"),
+                new Customer(NewCustomerId(), "Mark Encor")
             };
 
             // Create Accounts for Customers
             foreach (var customer in Customers)
-                customer.Accounts.Add(new Account(NewId("Account"), customer.Id));
+            {
+                customer.Accounts.Add(new Account(customer));
+            }
 
-            // Transfer 40 Zl then Undo it
-            IOperation pay = new Operation(Commands.Pay, new object[] {40, Customers[0].Accounts[0], Customers[1].Accounts[0]});
+            // Create a new debit of 100 for Customer1
+            IOperation customer1Debit = new Operation(Commands.Debit, new object[] { 170, Customers[0].Accounts[0] });
+            customer1Debit.Do();
+            History.AddRange(customer1Debit.History);
+
+            // Transfer 40 from Customer1 to Customer2 then Undo it and then do it again
+            IOperation pay = new Operation(Commands.Transfer, new object[] { 40, Customers[0].Accounts[0], Customers[1].Accounts[0] });
             pay.Do();
             pay.Undo();
             pay.Do();
             History.AddRange(pay.History);
 
-            // Create a new debit of 150 Zl
-            IOperation debit = new Operation(Commands.Debit, new object[] {150, Customers[1].Accounts[0]});
-            debit.Do();
-            History.AddRange(debit.History);
+            // Create a new debit of 150 Zl for Customer2
+            IOperation customer2Debit = new Operation(Commands.Debit, new object[] { 100, Customers[1].Accounts[0] });
+            customer2Debit.Do();
+            History.AddRange(customer2Debit.History);
+
+            // Create a new deposit of 140 Zl for Customer2
+            IOperation customer2Deposit = new Operation(Commands.Deposit, new object[] { Customers[1], 140, DateTime.Now.AddYears(1) });
+            customer2Deposit.Do();
+            History.AddRange(customer2Deposit.History);
         }
 
-        /// <summary>
-        /// Creates a new id, checks if ID is unique to given type. If not then creates another one.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private int NewId(string type = null)
+        private int NewCustomerId()
         {
             var id = CreateRandom.Next(99999999, 999999999);
-            if (type != null)
-                switch (type)
-                {
-                    case "Customer":
-                        if (Customers != null)
-                            return (Customers.SingleOrDefault(cid => cid.Id == id) != null) ? NewId("Customer") : id;
-                        break;
-                    case "Account":
-                        if (Customers.FirstOrDefault(a => a.Accounts.Any(aid => aid.Id == id)) != null)
-                            return (Customers.First(a => a.Accounts.Any(aid => aid.Id == id)) != null) ? NewId("Account") : id;
-                        break;
-                }
+            if (Customers != null)
+            {
+                return Customers.Any(cid => cid.CustomerId == id) ? NewCustomerId() : id;
+            }
             return id;
         }
     }

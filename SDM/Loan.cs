@@ -6,33 +6,34 @@
 
 	public class Loan : IOperation
     {
-        public Commands Command { get; set; }
         public float Amount { get; set; }
         public float MontlyCost { get; set; }
-        public float InterestRate { get; set; }
 	    public IAccount Account { get; set; }
-	    public List<IOpHistory> History { get; set; }
+	    public List<IOperationHistory> History { get; set; }
 
         public Loan(float amount, IAccount account)
         {
             Account = account;
             Amount = amount;
-            History = new List<IOpHistory>();
+            History = new List<IOperationHistory>();
         }
 
+        // Open Loan Account
         public void Do()
         {
             Account.Balance += Amount;
             MontlyCost += Amount;
             Amount += Amount;
-            Account.History.Add(new OpHistory("New Loan " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+            Account.History.Add(new OperationHistory("New Loan " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
         }
+
+        // Close Loan Account
         public void Undo()
         {
             Account.Balance -= Amount;
             MontlyCost -= Amount;
             Amount -= Amount;
-            Account.History.Add(new OpHistory("Loan Cancelled " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+            Account.History.Add(new OperationHistory("Loan Cancelled " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
         }
     }
 }

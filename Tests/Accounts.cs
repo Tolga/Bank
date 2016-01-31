@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SDM;
 using SDM.Interfaces;
 
@@ -52,7 +51,7 @@ namespace Tests
 
             foreach (var customer in _customers)
             {
-                _accounts.Add(new Account(1, customer.Id));
+                _accounts.Add(new Account(1, customer.CustomerId));
             }
 
             Assert.AreEqual(_accounts.Count, 3);
@@ -64,7 +63,7 @@ namespace Tests
 
             foreach (var customer in _customers)
             {
-                _accounts.Add(new Account(_bank, customer.Id));
+                _accounts.Add(new Account(_bank, customer.CustomerId));
             }
 
             Assert.AreEqual(_accounts.Count, 1);

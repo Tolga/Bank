@@ -1,41 +1,48 @@
-﻿namespace SDM
+﻿using System.Linq;
+
+namespace SDM
 {
     using System;
     using System.Collections.Generic;
     using Interfaces;
-    using Exceptions;
 
-    class Debit : IOperation
+    public class Debit : IOperation
     {
-        public Commands Command { get; set; }
         public IAccount Account { get; set; }
         public float Amount { get; set; }
-
-        public List<IOpHistory> History { get; set; }
+        public List<IOperationHistory> History { get; set; }
 
         public Debit(float amount, IAccount account)
         {
             Amount = amount;
             Account = account;
-            History = new List<IOpHistory>();
+            History = new List<IOperationHistory>();
         }
 
         public void Do()
         {
-            try
+            if (Account.AllowedDebit > Amount)
             {
-                Account.Balance -= Amount;
-                History.Add(new OpHistory("Debit operation finished successfully. " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+                Account.AllowedDebit -= Amount;
+                Account.Balance += Amount;
+                History.Add(new OperationHistory("Debit operation finished successfully. " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
             }
-            catch (ExceededDebitException)
+            else
             {
-                History.Add(new OpHistory("Debit operation rejected " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+                History.Add(new OperationHistory("Debit operation rejected " + Amount + " on Account: " + Account.AccountId, false, DateTime.Now));
             }
         }
         public void Undo()
         {
-            Account.Balance += Amount;
-            History.Add(new OpHistory("Debit operation cancelled successfully. " + Amount + " " + Account.Type + " on Account: " + Account.Id, DateTime.Now));
+            if (History.Last().Result)
+            {
+                Account.Balance -= Amount;
+                History.Add(new OperationHistory("Debit operation cancelled successfully. " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
+            }
+            else
+            {
+                History.Add(new OperationHistory("Debit operation cancel failed! Last Debit operation wasn't successful!" + Amount + " on Account: " + Account.AccountId, false, DateTime.Now));
+            }
         }
     }
 }
