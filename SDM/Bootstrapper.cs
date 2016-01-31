@@ -1,13 +1,22 @@
 ﻿namespace SDM
 {
     using System;
+    using Interfaces;
 
     class Bootstrapper
     {
         static void Main()
         {
-            Bank bank = new Bank();
-            foreach (var customer in bank.Customers)
+            IBank bank1 = new Bank(1);
+            IBank bank2 = new Bank(2);
+
+            BankNetwork bankNetwork = new BankNetwork();
+            bankNetwork.Register(bank1);
+            bankNetwork.Register(bank2);
+
+            bank1.Send(2, Commands.Transfer);
+
+            foreach (var customer in bank1.Customers)
             {
                 foreach (var account in customer.Accounts)
                 {
@@ -51,7 +60,7 @@
             Console.WriteLine("BANK'S HISTORY OF OPERATIONS:");
             Console.WriteLine();
 
-            foreach (var history in bank.History)
+            foreach (var history in bank1.History)
             {
                 Console.WriteLine("DESCRIPTION: " + history.Details);
                 Console.WriteLine("DATE OF EXECUTION: " + history.DateOfExecution);

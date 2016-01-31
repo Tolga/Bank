@@ -7,16 +7,32 @@
 
     public class Bank : IBank
     {
-        public Random CreateRandom { get; set; }
+        public int BankId { get; set; }
+        public IBankNetwork BankNetwork { get; set; }
         public float Balance { get; set; }
-        public float[] InterestRates { get; set; }
         public List<ICustomer> Customers { get; set; }
         public List<IOperationHistory> History { get; set; }
+        public Random CreateRandom { get; set; }
 
-        public Bank()
+        public Bank(int bankId)
         {
+            BankId = bankId;
             History = new List<IOperationHistory>();
             CreateData();
+        }
+        
+        // ToDo: Add CustomerNumber to Receive an Send
+
+        // Receives command from given bank
+        public virtual void Receive(int from, Commands command, int amount)
+        {
+            Console.WriteLine("{0} to {1}: '{2}' of {3}", from, BankId, command, amount);
+        }
+
+        // Sends command to given bank
+        public void Send(int to, Commands command, int amount)
+        {
+            BankNetwork.Send(BankId, to, command, amount);
         }
 
         private void CreateData()

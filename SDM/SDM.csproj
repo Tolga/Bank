@@ -80,10 +80,12 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Bank.cs" />
+    <Compile Include="BankNetwork.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Debit.cs" />
     <Compile Include="Exceptions\ExceededDebitException.cs" />
+    <Compile Include="Interfaces\IBankNetwork.cs" />
     <Compile Include="Interfaces\IInterestRate.cs" />
     <Compile Include="Interfaces\IBank.cs" />
     <Compile Include="Interfaces\ICustomer.cs" />
