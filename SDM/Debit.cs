@@ -21,12 +21,11 @@ namespace SDM
 
         public void Do()
         {
-            if (Account.AllowedDebit > Amount)
+            if (Account.AllowedDebit >= Amount)
             {
                 Account.AllowedDebit -= Amount;
                 Account.Balance += Amount;
                 Account.Debits += Amount;
-                Account.State.Check();
                 History.Add(new OperationHistory("Debit operation finished successfully. " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
             }
             else
@@ -41,7 +40,6 @@ namespace SDM
                 Account.AllowedDebit += Amount;
                 Account.Balance -= Amount;
                 Account.Debits -= Amount;
-                Account.State.Check();
                 History.Add(new OperationHistory("Debit operation cancelled successfully. " + Amount + " on Account: " + Account.AccountId, true, DateTime.Now));
             }
             else

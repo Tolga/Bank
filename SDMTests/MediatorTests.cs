@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SDM;
@@ -7,14 +6,12 @@ using SDM.Interfaces;
 
 namespace Tests
 {
-    [TestClass()]
+    [TestClass]
     public class MediatorTests
     {
         private IBank Bank1 { get; }
         private IBank Bank2 { get; }
-        private IBankNetwork BankNetwork { get; set; }
-
-        private readonly Random _random = new Random();
+        private IBankNetwork BankNetwork { get; }
 
         public MediatorTests()
         {
@@ -41,14 +38,14 @@ namespace Tests
             BankNetwork.Register(Bank2);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RegisterTest()
         {
             CollectionAssert.Contains(BankNetwork.Banks.Values, Bank1);
             CollectionAssert.Contains(BankNetwork.Banks.Values, Bank2);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SendTest()
         {
             Bank1.Customers.First().Accounts.First().Balance = 75;

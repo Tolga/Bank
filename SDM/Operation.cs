@@ -22,16 +22,16 @@ namespace SDM
             switch (Command)
             {
                 case Operations.Transfer:
-                    Result = new Transfer((int)Parameters[0], (IAccount)Parameters[1], (IAccount)Parameters[2]);
+                    Result = new Transfer(Convert.ToSingle(Parameters[0]), (IAccount)Parameters[1], (IAccount)Parameters[2]);
                     break;
                 case Operations.Debit:
-                    Result = new Debit((int)Parameters[0], (IAccount)Parameters[1]);
+                    Result = new Debit(Convert.ToSingle(Parameters[0]), (IAccount)Parameters[1]);
                     break;
                 case Operations.Deposit:
-                    Result = new Deposit((ICustomer)Parameters[0], (int)Parameters[1], (DateTime)Parameters[2]);
+                    Result = new Deposit((ICustomer)Parameters[0], Convert.ToSingle(Parameters[1]), (DateTime)Parameters[2]);
                     break;
                 case Operations.Loan:
-                    Result = new Loan((int)Parameters[0], (IAccount)Parameters[1]);
+                    Result = new Loan(Convert.ToSingle(Parameters[0]), (IAccount)Parameters[1]);
                     break;
             }
 	    }

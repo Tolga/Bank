@@ -11,7 +11,6 @@ namespace Tests
     public class StateTests
     {
         private IBank Bank1 { get; }
-        private IBankNetwork BankNetwork { get; set; }
 
         private readonly Random _random = new Random();
 
