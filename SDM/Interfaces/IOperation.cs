@@ -8,7 +8,8 @@
         void Undo();
         List<IOperationHistory> History { get; set; }
     }
-    public enum Commands
+
+    public enum Operations
     {
         Transfer,
         Debit,

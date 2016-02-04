@@ -61,7 +61,7 @@ namespace SDM
                 {
                     DepositAccount.State.Calculate();
                     NormalAccount.Balance += DepositAccount.Balance;
-                    Customer.Accounts.Remove(DepositAccount);
+                    DepositAccount.Balance = 0;
                     History.Add(new OperationHistory("Closing deposit successful for Customer " + Customer.CustomerId, true, DateTime.Now));
                 }
                 else

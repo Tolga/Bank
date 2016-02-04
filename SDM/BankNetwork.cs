@@ -1,30 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace SDM
 {
     using Interfaces;
-    
-    class BankNetwork : IBankNetwork
+    using System.Collections.Generic;
+
+    public class BankNetwork : IBankNetwork
     {
-        private readonly Dictionary<int, IBank> _banks = new Dictionary<int, IBank>();
+        public Dictionary<int, IBank> Banks { get; set; }
+
+        public BankNetwork()
+        {
+            Banks = new Dictionary<int, IBank>();
+        }
 
         public void Register(IBank bank)
         {
-            if (!_banks.ContainsValue(bank))
+            if (!Banks.ContainsValue(bank))
             {
-                _banks[bank.BankId] = bank;
+                Banks[bank.BankId] = bank;
             }
 
             bank.BankNetwork = this;
         }
 
-        public void Send(int from, int to, Commands command)
+        public void Send(ICustomer from, ICustomer to, float amount)
         {
-            IBank bank = _banks[to];
+            IBank reciverBank = Banks.Values.Single(b => b.Customers.Contains(to));
+
+            IBank bank = Banks[reciverBank.BankId];
 
             if (bank != null)
             {
-                bank.Receive(from, command);
+                bank.Receive(from, to, amount);
             }
         }
     }

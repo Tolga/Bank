@@ -6,31 +6,31 @@ namespace SDM
     using System.Collections.Generic;
     using Interfaces;
 
-    class Transfer : IOperation
+    public class Transfer : IOperation
     {
-        public Commands Command { get; set; }
+        public Operations Operation { get; set; }
         public float Amount { get; set; }
-        public IAccount Creditor { get; set; }
-        public IAccount Debitor { get; set; }
+        public IAccount To { get; set; }
+        public IAccount From { get; set; }
         public List<IOperationHistory> History { get; set; }
 
-        public Transfer(float amount, IAccount debitor, IAccount creditor)
+        public Transfer(float amount, IAccount from, IAccount to)
         {
-            Debitor = debitor;
-            Creditor = creditor;
+            From = from;
+            To = to;
             Amount = amount;
             History = new List<IOperationHistory>();
         }
 
         public void Do()
         {
-            if (Debitor.Balance - Amount >= 0)
+            if (From.Balance - Amount >= 0)
             {
-                Debitor.Balance -= Amount;
-                Creditor.Balance = Creditor.Balance + Amount;
-                History.Add(new OperationHistory(Debitor.CustomerId+ " payed " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, true, DateTime.Now));
-                Debitor.History.Add(new OperationHistory("Payed " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, true, DateTime.Now));
-                Creditor.History.Add(new OperationHistory("Recieved " + Amount + " " + Creditor.Type + " from: " + Debitor.CustomerId, true, DateTime.Now));
+                From.Balance -= Amount;
+                To.Balance = To.Balance + Amount;
+                History.Add(new OperationHistory(From.CustomerId+ " payed " + Amount + " " + From.Type + " to: " + To.CustomerId, true, DateTime.Now));
+                From.History.Add(new OperationHistory("Payed " + Amount + " " + From.Type + " to: " + To.CustomerId, true, DateTime.Now));
+                To.History.Add(new OperationHistory("Recieved " + Amount + " " + To.Type + " from: " + From.CustomerId, true, DateTime.Now));
             }
             else
             {
@@ -41,11 +41,11 @@ namespace SDM
         public void Undo()
         {
             if (History.Last().Result) {
-                Debitor.Balance += Amount;
-                Creditor.Balance -= Amount;
-                History.Add(new OperationHistory(Debitor.CustomerId + " Cancelled Transfer " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, true, DateTime.Now));
-                Debitor.History.Add(new OperationHistory("Transfer Cancelled " + Amount + " " + Debitor.Type + " to: " + Creditor.CustomerId, true, DateTime.Now));
-                Creditor.History.Add(new OperationHistory("Transfer Returned " + Amount + " " + Creditor.Type + " to: " + Debitor.CustomerId, true, DateTime.Now));
+                From.Balance += Amount;
+                To.Balance -= Amount;
+                History.Add(new OperationHistory(From.CustomerId + " Cancelled Transfer " + Amount + " " + From.Type + " to: " + To.CustomerId, true, DateTime.Now));
+                From.History.Add(new OperationHistory("Transfer Cancelled " + Amount + " " + From.Type + " to: " + To.CustomerId, true, DateTime.Now));
+                To.History.Add(new OperationHistory("Transfer Returned " + Amount + " " + To.Type + " to: " + From.CustomerId, true, DateTime.Now));
             }
             else
             {

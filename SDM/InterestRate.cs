@@ -7,7 +7,6 @@ namespace SDM
 
     public abstract class InterestRate : IInterestRate
     {
-        public IAccount Account { get; set; }
         public abstract void Calculate();
         public abstract float Check();
     }
@@ -18,7 +17,7 @@ namespace SDM
         private const float PenaltyRate = 0.025F;
         private const float Peak = 4999.00F;
 
-        public IAccount Account { get; set; }
+        private IAccount Account { get; }
 
         public Normal(IAccount account)
         {
@@ -27,17 +26,31 @@ namespace SDM
 
         public void Calculate()
         {
+            var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).Months;
+
             // Check for early close of deposit
-            if (Account.Type == AccountType.Deposit && DateTime.Now < Account.CloseDate)
+            if (Account.Type == AccountType.Deposit)
             {
-                var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).ElapsedMonths;
-                Account.Balance += Account.Balance * (elapsedMonths / 12) * PenaltyRate;
+                if (elapsedMonths < 12)
+                {
+                    Account.Balance += Account.Balance * (elapsedMonths / 12) * PenaltyRate;
+                    Account.History.Add(new OperationHistory("PENALTY", true, DateTime.Now));
+                }
+                else
+                {
+                    Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
+                    Account.History.Add(new OperationHistory("NORMAL", true, DateTime.Now));
+                }
+            }
+            else if (Account.Type == AccountType.Loan)
+            {
+                Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
             }
             else
             {
-                var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).ElapsedMonths;
-                Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
+                Account.Balance += Account.Balance * Rate;
             }
+
             Check();
         }
 
@@ -48,6 +61,7 @@ namespace SDM
                 Account.State = new Premium(Account);
                 Account.History.Add(new OperationHistory("Your account state changed to Premium!", true, DateTime.Now));
             }
+
             return Rate;
         }
     }
@@ -57,7 +71,7 @@ namespace SDM
         private const float Rate = 0.1F;
         private const float PenaltyRate = 0.05F;
         private const float Peak = 5000.00F;
-        public IAccount Account { get; set; }
+        private IAccount Account { get; }
 
         public Premium(IAccount account)
         {
@@ -66,17 +80,31 @@ namespace SDM
 
         public void Calculate()
         {
+            var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).Months;
+
             // Check for early close of deposit
-            if (Account.Type == AccountType.Deposit && DateTime.Now < Account.CloseDate)
+            if (Account.Type == AccountType.Deposit)
             {
-                var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).ElapsedMonths;
-                Account.Balance += Account.Balance * (elapsedMonths / 12) * PenaltyRate;
+                if (elapsedMonths < 12)
+                {
+                    Account.Balance += Account.Balance * (elapsedMonths/12) * PenaltyRate;
+                    Account.History.Add(new OperationHistory("PENALTY", true, DateTime.Now));
+                }
+                else
+                {
+                    Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
+                    Account.History.Add(new OperationHistory("PREMIUM", true, DateTime.Now));
+                }
+            }
+            else if (Account.Type == AccountType.Loan)
+            {
+                Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
             }
             else
             {
-                var elapsedMonths = new DateDiff(Account.OpenDate, DateTime.Now).ElapsedMonths;
-                Account.Balance += Account.Balance * (elapsedMonths / 12) * Rate;
+                Account.Balance += Account.Balance * Rate;
             }
+
             Check();
         }
 

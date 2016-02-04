@@ -14,7 +14,6 @@ namespace Tests
 
         public Accounts()
         {
-            _bank = new Bank();
         }
 
         #region Additional test attributes

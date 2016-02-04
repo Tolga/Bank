@@ -16,8 +16,6 @@ namespace Tests
 
         public Customers()
         {
-            _bank = new Bank();
-            _customers = _bank.Customers;
         }
 
         #region Additional test attributes

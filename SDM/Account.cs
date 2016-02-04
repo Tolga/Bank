@@ -24,7 +24,14 @@
         #region account
         public int AccountId { get; set; }
         public int CustomerId { get; set; }
-        public float Balance { get; set; }
+        public float Balance {
+            get { return _balance;  }
+            set {
+                _balance = value;
+                State?.Check();
+            }
+        }
+        private float _balance;
         public IInterestRate State { get; set; }
         public DateTime OpenDate { get; set; }
         public DateTime CloseDate { get; set; }
